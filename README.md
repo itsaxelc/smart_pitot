@@ -6,9 +6,9 @@
 </p>
 
 <p align="center">
-  ![Platform](https://img.shields.io/badge/Platform-STM32L476RG-03234B?style=for-the-badge&logo=stmicroelectronics)
-  ![Language](https://img.shields.io/badge/Language-Embedded%20C-00599C?style=for-the-badge&logo=c)
-  ![Status](https://img.shields.io/badge/Status-In%20Development-orange?style=for-the-badge)
+  <img src="https://img.shields.io/badge/Platform-STM32L476RG-03234B?style=for-the-badge&logo=stmicroelectronics" alt="Platform: STM32L476RG" />
+  <img src="https://img.shields.io/badge/Language-Embedded%20C-00599C?style=for-the-badge&logo=c" alt="Language: Embedded C" />
+  <img src="https://img.shields.io/badge/Status-In%20Development-orange?style=for-the-badge" alt="Status: In Development" />
 </p>
 
 ---
