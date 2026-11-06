@@ -1,18 +1,31 @@
-# Build output
+# Build directories
 build/
 cmake-build-*/
 Debug/
 Release/
+
+# Compiled firmware and intermediate files
 *.elf
 *.hex
 *.bin
 *.map
 *.o
 *.a
+*.d
 
-# IDE
+# IDE and editor files
 .vscode/
 .idea/
 
-# Generated
+# Generated files
 *.log
+*.tmp
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+.ninja_deps
+.ninja_log
+build.ninja

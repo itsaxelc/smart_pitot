@@ -1,5 +1,4 @@
 #include "bme280.h"
-#include "i2c1.h"
 #include <stddef.h>
 #include <string.h>
 
@@ -85,7 +84,7 @@ static BME280_Status BME280_ReadRegisters(BME280_Handle *dev, uint8_t reg, uint8
     {
         return BME280_ERROR_INVALID_PARAM;
     }
-    I2C_Status status = I2C1_WriteRead(dev->address, &reg, 1U, data, length);
+    I2C_Status status = I2C_WriteRead(&dev->hi2c, dev->address, &reg, 1U, data, length);
     if (status != I2C_OK)
     {
         return BME280_ERROR_BUS;
@@ -105,7 +104,7 @@ static BME280_Status BME280_WriteRegister(BME280_Handle *dev,uint8_t reg,uint8_t
         return BME280_ERROR_INVALID_PARAM;
     }
     uint8_t buffer[2] = {reg, value};
-    I2C_Status status = I2C1_Write(dev->address,buffer,2U);
+    I2C_Status status = I2C_Write(&dev->hi2c, dev->address,buffer,2U);
 
     if (status != I2C_OK)
     {
@@ -251,14 +250,13 @@ static BME280_Status BME280_Configure(BME280_Handle *dev)
 
 /* Initialization */
 
-BME280_Status BME280_Init(BME280_Handle *dev, uint8_t address, const BME280_Config *config)
+BME280_Status BME280_Init(BME280_Handle *dev, const I2C_Handle *hi2c, uint8_t address, const BME280_Config *config)
 {
     uint8_t chip_id;
     BME280_Status result;
     BME280_Config default_config;
 
-    if (dev == NULL) return BME280_ERROR_INVALID_PARAM;
-
+    if (dev == NULL || hi2c == NULL || hi2c->instance == NULL) return BME280_ERROR_INVALID_PARAM;
     if (address != BME280_I2C_ADDR_PRIMARY && address != BME280_I2C_ADDR_SECONDARY)
         return BME280_ERROR_INVALID_PARAM;
 
@@ -275,6 +273,7 @@ BME280_Status BME280_Init(BME280_Handle *dev, uint8_t address, const BME280_Conf
     /* Initialize the handle before the first bus transaction */
     memset(dev, 0, sizeof(*dev));
 
+    dev->hi2c = *hi2c;
     dev->address= address;
     dev->config= *config;
 
